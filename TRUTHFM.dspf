@@ -1,0 +1,319 @@
+     A**************************************************************************
+     A*
+     A*  NAME:  TRUTHFM
+     A*  TYPE:  DISPLAY FILE
+     A*  DESC:  TRUTH MATRIX MAINTENANCE
+     A*
+     A**************************************************************************
+     A*
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      INDARA
+     A*
+     A          R TRUTHS1                   SFL
+     A                                      SFLNXTCHG
+     A            S1HEADERID    10  0H
+     A            S1OPTION       1A  B  6  5COLOR(YLW)
+     A                                      VALUES(' ' 'C' 'D' 'E' 'S' 'X')
+     A            S1CONDNAME    15A  O  6  9
+     A            S1ENABLED      1A  O  6 27
+     A            S1EFFECT        L  O  6 31DATFMT(*USA)
+     A            S1EXPIRE        L  O  6 43DATFMT(*USA)
+     A            S1PROGRAM     10A  O  6 55
+     A            S1LASTMNT       L  O  6 67DATFMT(*USA)
+     A            S1DESCRIP     50A  O  7 11
+     A*
+     A          R TRUTHC1                   SFLCTL(TRUTHS1)
+     A                                      SFLSIZ(1000)
+     A                                      SFLPAG(0008)
+     A                                      CA03(03 'Exit')
+     A                                      CF05(05 'Refresh')
+     A                                      CF06(06 'Create')
+     A  32                                  SFLDSP
+     A  31                                  SFLDSPCTL
+     A N31                                  SFLCLR
+     A  31                                  SFLEND(*MORE)
+     A  32                                  SFLDROP(CF11)
+     A                                      OVERLAY
+     A                                  1  4'Opt:'
+     A                                  1  9'C=Change'
+     A                                  1 18'D=Delete'
+     A                                  1 27'E=Expire'
+     A                                  1 36'S=Status'
+     A                                  1 45'X=Criteria'
+     A                                  1 57' Truth Matrix Maint '
+     A                                      DSPATR(RI)
+     A                                      COLOR(BLU)
+     A            C1PGMNAM      10A  O  2 57
+     A                                  2 69DATE
+     A                                      EDTCDE(Y)
+     A                                  3  4'Pos:'
+     A            C1POSITION    15A  B  3  9COLOR(YLW)
+     A                                  3 31'Desc:'
+     A            C1DESCRIP     15A  B  3 37COLOR(YLW)
+     A            C1USRPRF      10A  O  3 57
+     A                                  3 69TIME
+     A                                  5  4'Opt'
+     A                                  5  9'Condition Name '
+     A                                      DSPATR(UL)
+     A                                  5 26'Enb'
+     A                                      DSPATR(UL)
+     A                                  5 31'Effective '
+     A                                      DSPATR(UL)
+     A                                  5 43'Expiration'
+     A                                      DSPATR(UL)
+     A                                  5 55'Program   '
+     A                                      DSPATR(UL)
+     A                                  5 67'Last Maint'
+     A                                      DSPATR(UL)
+     A*
+     A          R TRUTHK1
+     A                                      OVERLAY
+     A                                 24  4'F3=Exit'
+     A                                      COLOR(BLU)
+     A                                 24 18'F5=Refresh'
+     A                                      COLOR(BLU)
+     A                                 24 35'F6=Create'
+     A                                      COLOR(BLU)
+     A  32                             24 51'F11=Description'
+     A                                      COLOR(BLU)
+     A                                 24 72'ENTER'
+     A                                      COLOR(BLU)
+     A*
+     A          R TRUTHW1
+     A                                      WINDOW(4 7 5 68 *NOMSGLIN)
+     A                                      WDWBORDER((*COLOR BLU) (*DSPATR RI)-
+     A                                       (*CHAR '        '))
+     A                                      CA12(12 'Cancel')
+     A                                      OVERLAY
+     A                                  1  1'Condition Name '
+     A                                      DSPATR(UL)
+     A                                  1 18'Sts'
+     A                                      DSPATR(UL)
+     A                                  1 23'Effective '
+     A                                      DSPATR(UL)
+     A                                  1 35'Expiration'
+     A                                      DSPATR(UL)
+     A                                  1 47'Program   '
+     A                                      DSPATR(UL)
+     A                                  1 59'Last Maint'
+     A                                      DSPATR(UL)
+     A            W1HEADERID    10S 0H
+     A            W1CONDNAME    15A  B  2  1
+     A  35                                  COLOR(YLW)
+     A  35                                  DSPATR(UL)
+     A N35                                  DSPATR(HI)
+     A N35                                  DSPATR(PR)
+     A            W1ENABLED      1A  O  2 19DSPATR(HI)
+     A            W1EFFECT        L  B  2 23DATFMT(*USA)
+     A  36                                  COLOR(YLW)
+     A N36                                  DSPATR(HI)
+     A N36                                  DSPATR(PR)
+     A            W1EXPIRE        L  B  2 35DATFMT(*USA)
+     A  36                                  COLOR(YLW)
+     A N36                                  DSPATR(HI)
+     A N36                                  DSPATR(PR)
+     A            W1PROGRAM     10A  B  2 47
+     A  36                                  COLOR(YLW)
+     A N36                                  DSPATR(HI)
+     A N36                                  DSPATR(PR)
+     A            W1LASTMNT       L  O  2 59DATFMT(*USA)
+     A                                      DSPATR(HI)
+     A            W1DESCRIP     50A  B  3  3
+     A  36                                  COLOR(YLW)
+     A N36                                  DSPATR(HI)
+     A N36                                  DSPATR(PR)
+     A                                  5  1'ENTER to'
+     A                                      COLOR(BLU)
+     A            W1ACTION       6A  O  5 10DSPATR(HI)
+     A            W1ERRTEXT     35A  O  5 20COLOR(RED)
+     A                                  5 59'F12=Cancel'
+     A                                      COLOR(BLU)
+     A*
+     A          R TRUTHS2                   SFL
+     A                                      SFLNXTCHG
+     A            S2HEADERID    10S 0H
+     A            S2DETAILID    10S 0H
+     A            S2OPTION       1A  B  8  3COLOR(YLW)
+     A                                      VALUES(' ' 'C' 'D' 'E' 'S')
+     A            S2BANKCODE     4A  O  8  7
+     A            S2DEBTTYPE     4A  O  8 13
+     A            S2STATE        2A  O  8 19
+     A            S2AREACODE     3Y 0O  8 23EDTCDE(4)
+     A            S2EXCHANGE     3Y 0O  8 27EDTCDE(4)
+     A            S2GENDER       1A  O  8 33
+     A            S2MARITAL      1A  O  8 38
+     A            S2AGEFROM      3Y 0O  8 42EDTCDE(4)
+     A            S2AGETHRU      3Y 0O  8 46EDTCDE(4)
+     A            S2ENABLED      1A  O  8 52
+     A            S2EFFECT        L  O  8 56DATFMT(*USA)
+     A            S2EXPIRE        L  O  8 68DATFMT(*USA)
+     A                                  9 58'Program:'
+     A            S2PROGRAM     10   O  9 68
+     A*
+     A          R TRUTHC2                   SFLCTL(TRUTHS2)
+     A                                      CA12(12 'Cancel')
+     A                                      CF05(05 'Refresh')
+     A                                      CF06(06 'Create')
+     A                                      OVERLAY
+     A  42                                  SFLDSP
+     A  41                                  SFLDSPCTL
+     A N41                                  SFLCLR
+     A  41                                  SFLEND(*MORE)
+     A                                      SFLSIZ(0700)
+     A                                      SFLPAG(0007)
+     A                                  1  2'Op:'
+     A                                  1  7'C=Change'
+     A                                  1 16'D=Delete'
+     A                                  1 25'E=Expire'
+     A                                  1 34'S=Status'
+     A                                  1 60' Truth Matrix Maint '
+     A                                      DSPATR(RI)
+     A                                      COLOR(BLU)
+     A            C2PGMNAM      10A  O  2 60
+     A                                  2 72DATE
+     A                                      EDTCDE(Y)
+     A                                  3  2'Condition:'
+     A            C2CONDNAME    15A  O  3 14DSPATR(HI)
+     A            C2USRPRF      10A  O  3 60
+     A                                  3 72TIME
+     A            C2DESCRIP     50   O  4  4DSPATR(HI)
+     A                                  6  7'Bank'
+     A                                  6 13'Debt'
+     A                                  6 23' PHONE '
+     A                                      DSPATR(UL)
+     A                                  6 37'Mar'
+     A                                  6 42'  AGE  '
+     A                                      DSPATR(UL)
+     A                                  7  2'Op'
+     A                                      DSPATR(UL)
+     A                                  7  7'Code'
+     A                                      DSPATR(UL)
+     A                                  7 13'Type'
+     A                                      DSPATR(UL)
+     A                                  7 19'St'
+     A                                      DSPATR(UL)
+     A                                  7 23'A/C'
+     A                                      DSPATR(UL)
+     A                                  7 27'Xch'
+     A                                      DSPATR(UL)
+     A                                  7 32'Gen'
+     A                                      DSPATR(UL)
+     A                                  7 37'Sts'
+     A                                      DSPATR(UL)
+     A                                  7 42'Frm'
+     A                                      DSPATR(UL)
+     A                                  7 46' To'
+     A                                      DSPATR(UL)
+     A                                  7 51'Enb'
+     A                                      DSPATR(UL)
+     A                                  7 56'Effective '
+     A                                      DSPATR(UL)
+     A                                  7 68'Expiration'
+     A                                      DSPATR(UL)
+     A*
+     A          R TRUTHK2
+     A                                      OVERLAY
+     A                                 24  2'F5=Refresh'
+     A                                      COLOR(BLU)
+     A                                 24 26'F6=Create'
+     A                                      COLOR(BLU)
+     A                                 24 49'F12=Cancel'
+     A                                      COLOR(BLU)
+     A                                 24 73'ENTER'
+     A                                      COLOR(BLU)
+     A*
+     A          R TRUTHW2
+     A                                      CA12(12 'Cancel')
+     A                                      OVERLAY
+     A                                      WINDOW(4 5 6 71 *NOMSGLIN)
+     A                                      WDWBORDER((*COLOR BLU) (*DSPATR RI)-
+     A                                       (*CHAR '        '))
+     A            W2HEADERID    10S 0H
+     A            W2DETAILID    10S 0H
+     A                                  1  1'Bank'
+     A                                  1  7'Debt'
+     A                                  1 17' PHONE '
+     A                                      DSPATR(UL)
+     A                                  1 31'Mar'
+     A                                  1 36'  AGE  '
+     A                                      DSPATR(UL)
+     A                                  2  1'Code'
+     A                                      DSPATR(UL)
+     A                                  2  7'Type'
+     A                                      DSPATR(UL)
+     A                                  2 13'St'
+     A                                      DSPATR(UL)
+     A                                  2 17'A/C'
+     A                                      DSPATR(UL)
+     A                                  2 21'Xch'
+     A                                      DSPATR(UL)
+     A                                  2 26'Gen'
+     A                                      DSPATR(UL)
+     A                                  2 31'Sts'
+     A                                      DSPATR(UL)
+     A                                  2 36'Frm'
+     A                                      DSPATR(UL)
+     A                                  2 40' To'
+     A                                      DSPATR(UL)
+     A                                  2 45'Enb'
+     A                                      DSPATR(UL)
+     A                                  2 50'Effective '
+     A                                      DSPATR(UL)
+     A                                  2 62'Expiration'
+     A                                      DSPATR(UL)
+     A            W2BANKCODE     4A  B  3  1
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2DEBTTYPE     4A  B  3  7
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2STATE        2A  B  3 13
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2AREACODE     3Y 0B  3 17EDTCDE(4)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2EXCHANGE     3Y 0B  3 21EDTCDE(4)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2GENDER       1A  B  3 27
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2MARITAL      1A  B  3 32
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2AGEFROM      3Y 0B  3 36EDTCDE(4)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2AGETHRU      3Y 0B  3 40EDTCDE(4)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2ENABLED      1A  O  3 46
+     A            W2EFFECT        L  B  3 50DATFMT(*USA)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A            W2EXPIRE        L  B  3 62DATFMT(*USA)
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A                                  4 52'Program:'
+     A            W2PROGRAM     10A  B  4 62
+     A  46                                  COLOR(YLW)
+     A N46                                  DSPATR(HI)
+     A N46                                  DSPATR(PR)
+     A                                  6  1'ENTER to'
+     A                                      COLOR(BLU)
+     A            W2ACTION       6A  O  6 10DSPATR(HI)
+     A            W2ERRTEXT     35A  O  6 20COLOR(RED)
+     A                                  6 62'F12=Cancel'
+     A                                      COLOR(BLU)

@@ -1,0 +1,6 @@
+
+             STRPGMEXP  SIGNATURE('TRUTHTOOL')
+             EXPORT     SYMBOL(ISTRUE)
+             EXPORT     SYMBOL(CALLEDFROMPGM)
+             ENDPGMEXP
+
